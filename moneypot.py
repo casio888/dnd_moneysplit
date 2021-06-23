@@ -7,7 +7,9 @@ class Moneypot():
     silv = 0
     copp = 0
 
-    def __init__(self, data) -> None:
+    def __init__(self, data=None) -> None:
+        if data == None:
+            data = [0,0,0,0,0]
         if type(data) != list:
             raise TypeError("Excpected List.")
         if len(data) != 5:
@@ -40,8 +42,22 @@ class Moneypot():
             counter+=1
         return self(data)
 
-    def get_money(self):
-        return [self.plat, self.gold, self.elec, self.silv, self.copp]
+    def get_money(self, string=True):
+        money = [self.plat, self.gold, self.elec, self.silv, self.copp]
+        if not string:
+            return money
+        
+        desc = ["pp", "gp", "ep", "sp", "cp"]
+        return " ".join([str(x) + y for x, y in zip(money, desc) if x != 0])
+        
+
 
     def split(self, num_people, pool_copper=False, debug=False):
-        pass
+        # calculate whole worth
+        if type(num_people) != int:
+            raise ValueError("num_people has to be a positive integer > 0")
+        people = [Moneypot() for x in range(num_people)]
+        
+        #if copper pool, do that now and recalculate
+
+        # print results
